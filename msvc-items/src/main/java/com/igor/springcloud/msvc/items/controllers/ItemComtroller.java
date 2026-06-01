@@ -3,6 +3,8 @@ package com.igor.springcloud.msvc.items.controllers;
 import org.springframework.web.bind.annotation.RestController;
 import com.igor.springcloud.msvc.items.models.Item;
 import com.igor.springcloud.msvc.items.services.ItemService;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +25,14 @@ public class ItemComtroller{
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Item> details (@PathVariable Long id) {
+    public ResponseEntity<?> details (@PathVariable Long id) {
         Optional<Item> itemOptional = itemService.findById(id);
         if(itemOptional.isPresent()) {
             return ResponseEntity.ok(itemOptional.get());
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(404)
+                .body(Collections.singletonMap(
+                    "message", 
+                    "Product not found en microservice msvc-products"));
     }
 }
