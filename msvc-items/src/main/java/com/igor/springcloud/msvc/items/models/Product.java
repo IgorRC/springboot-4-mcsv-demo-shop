@@ -7,11 +7,18 @@ public class Product {
     private String name;
     private Double price;
     private LocalDate createdAt;
+    private Integer port;
     public Long getId() {
         return id;
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public Integer getPort() {
+        return port;
+    }
+    public void setPort(Integer port) {
+        this.port = port;
     }
     public String getName() {
         return name;
