@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 public class ItemComtroller{
@@ -22,8 +22,8 @@ public class ItemComtroller{
         return itemService.findAll();
     }
     
-    @GetMapping("/{i}")
-    public ResponseEntity<Item> details (@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Item> details (@PathVariable Long id) {
         Optional<Item> itemOptional = itemService.findById(id);
         if(itemOptional.isPresent()) {
             return ResponseEntity.ok(itemOptional.get());
