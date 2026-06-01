@@ -34,6 +34,14 @@ public class Product {
         this.id = id;
     }
 
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
     public String getName() {
         return name;
     }
