@@ -1,5 +1,6 @@
 package com.igor.springcloud.msvc.products.controller;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,11 +29,14 @@ public class ProductController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Product> details (@PathVariable Long id) {
+    public ResponseEntity<?> details (@PathVariable Long id) {
         Optional<Product> productOptional = service.findById(id);
         if(productOptional.isPresent()) {
             return ResponseEntity.ok(productOptional.get());
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(404)
+                            .body(Collections.singletonMap(
+                                "message", 
+                                "Product not found"));
     }
 }
