@@ -1,0 +1,13 @@
+[
+  {
+    "name": "ms",
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "",
+    "database": "db_springboot_cloud",
+    "scope": "project",
+    "id": "72d3c3a8-8b66-448d-8c9a-f8875de36cf4"
+  }
+]

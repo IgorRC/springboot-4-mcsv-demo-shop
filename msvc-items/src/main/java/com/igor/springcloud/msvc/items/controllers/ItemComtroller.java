@@ -1,0 +1,33 @@
+package com.igor.springcloud.msvc.items.controllers;
+
+import org.springframework.web.bind.annotation.RestController;
+import com.igor.springcloud.msvc.items.models.Item;
+import com.igor.springcloud.msvc.items.services.ItemService;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@RestController
+public class ItemComtroller{
+    private final ItemService itemService;
+
+    public ItemComtroller(ItemService itemService) {
+        this.itemService = itemService;
+    }
+
+    @GetMapping
+    public List<Item> list () {
+        return itemService.findAll();
+    }
+    
+    @GetMapping("/{i}")
+    public ResponseEntity<Item> details (@RequestParam Long id) {
+        Optional<Item> itemOptional = itemService.findById(id);
+        if(itemOptional.isPresent()) {
+            return ResponseEntity.ok(itemOptional.get());
+        }
+        return ResponseEntity.notFound().build();
+    }
+}
