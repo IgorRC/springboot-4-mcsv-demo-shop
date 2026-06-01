@@ -11,6 +11,8 @@ import com.igor.springcloud.msvc.items.clients.ProductFeingClient;
 import com.igor.springcloud.msvc.items.models.Item;
 import com.igor.springcloud.msvc.items.models.Product;
 
+import feign.FeignException;
+
 @Service
 public class ItemServiceFeing implements ItemService {
     @Autowired
@@ -26,12 +28,12 @@ public class ItemServiceFeing implements ItemService {
 
     @Override
     public Optional<Item> findById(Long id) {
-        // TODO Auto-generated method stub
-        Product product = client.details(id);
-        if(product != null) {
+        try {
+            Product product = client.details(id);
             return Optional.of(new Item(product, new Random().nextInt(10) + 1));
+        } catch (FeignException e) {
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
 }
