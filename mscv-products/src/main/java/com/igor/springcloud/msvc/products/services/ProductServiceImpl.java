@@ -3,7 +3,8 @@ package com.igor.springcloud.msvc.products.services;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.bouncycastle.jcajce.provider.asymmetric.ec.SignatureSpi.ecCVCDSA;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.igor.springcloud.msvc.products.entities.Product;
@@ -14,23 +15,29 @@ public class ProductServiceImpl implements ProductService {
     
     
     final private ProductRepository productRepository;
+    final private Environment env;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, Environment env) {
         this.productRepository = productRepository;
+        this.env = env;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Product> findAll() {
-        System.out.println("entro a servicio producto");
-        return (List<Product>)productRepository.findAll();
+        return ((List<Product>)productRepository.findAll()).stream().map(product ->{
+            product.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+            return product;
+        }).toList();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<Product> findById(Long id) {
-        // Implementation for finding a product by ID
-        return productRepository.findById(id);
+        return productRepository.findById(id).map(product ->{
+            product.setPort(Integer.parseInt(env.getProperty("local.server.port")));
+            return product;
+        });
     }
 
 }
