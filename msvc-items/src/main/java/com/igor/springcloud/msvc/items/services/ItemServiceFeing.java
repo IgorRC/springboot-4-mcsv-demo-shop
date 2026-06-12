@@ -3,6 +3,7 @@ package com.igor.springcloud.msvc.items.services;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ public class ItemServiceFeing implements ItemService {
     public List<Item> findAll() {
         return client.findAll()
                 .stream()
-                .map(p -> new Item(p, new Random().nextInt(10) + 1)).toList();
+                .map(p -> new Item(p, new Random().nextInt(10) + 1))
+            .collect(Collectors.toList());
     }
 
     @Override
