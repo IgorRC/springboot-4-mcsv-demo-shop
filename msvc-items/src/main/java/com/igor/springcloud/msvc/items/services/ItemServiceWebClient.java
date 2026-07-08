@@ -25,7 +25,7 @@ public class ItemServiceWebClient implements ItemService {
 
     @Override
     public List<Item> findAll() {
-        return this.webClient.build().get().uri("http://mscv-products/api/products")
+        return this.webClient.build().get()
         .accept(MediaType.APPLICATION_JSON)
         .retrieve()
         .bodyToFlux(Product.class)
@@ -38,7 +38,7 @@ public class ItemServiceWebClient implements ItemService {
     public Optional<Item> findById(Long id) {
         Map<String, Object> params = new HashMap<>();
         params.put("id", id);
-        return Optional.ofNullable(this.webClient.build().get().uri("http://mscv-products/api/products{id}", params)
+        return Optional.ofNullable(this.webClient.build().get().uri("/products{id}", params)
         .accept(MediaType.APPLICATION_JSON)
         .retrieve()
         .bodyToMono(Product.class)

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.igor.springcloud.msvc.items.models.Product;
 
-@FeignClient(url = "localhost:8081", name = "msvc-products")
+@FeignClient(name = "msvc-products")
 public interface ProductFeingClient {
 
     @GetMapping("/api/products")
