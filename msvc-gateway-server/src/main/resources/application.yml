@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+          - id: mscv-products
+            uri: lb://mscv-products
+            predicates:
+            - Path=/mscv-products/**
+            filters:
+            - StripPrefix=1
